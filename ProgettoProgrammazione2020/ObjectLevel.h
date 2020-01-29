@@ -2,7 +2,7 @@
 
 class LevelGenerator {
 protected:
-	int MapLevel[3][3];
+	Object MapLevel[][3];
 
 public:
 	LevelGenerator() {

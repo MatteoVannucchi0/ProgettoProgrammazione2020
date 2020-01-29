@@ -7,14 +7,14 @@ enum ObjectType {
 
 class Object {
 protected:
-	char appearence;
 	ObjectType type;
 public:
+	char appearence;
 	Object() {
-		
 	}
 
 	Object(ObjectType type) {
+		this->type = type;
 		switch (type)
 		{
 		case wall:
@@ -31,6 +31,8 @@ public:
 		}
 	}
 
-	void Draw();
+	ObjectType GetType() {
+		return this->type;
+	}
 };
 

@@ -3,46 +3,29 @@
 #include "curses.h"
 #include "Constant.h"
 #include "Screen.h"
+#include "Utilities.h"
 using namespace std;
 
-int mod(int a, int b) {
-	return (a % b + b) % b;
-}
-
-int RandomInt(int min, int max) {
-	return rand() % (max - min + 1) + min;
-}
-
-void InitScreen() {
-	initscr();
-	nodelay(stdscr, TRUE);
-	start_color();
-	
-	init_pair(ObstaclePair, COLOR_RED, COLOR_BLACK); // DEFINITI I COLORI DEGLI OGGETTI
-	init_pair(WallPair, COLOR_WHITE, COLOR_BLACK);
-	init_pair(AirPair, COLOR_BLUE, COLOR_BLACK);
-}
 
 Map::Map() {
-	//INIZIALIZZA LO SCHERMO
-	InitScreen();
-
 	//INIZIALIZZA LA MAPPA 
 	this->StartLine = 0;
 	this->EndLine = MAP_HEIGHT - 1;
-	for (int i = 0; i < MAP_HEIGHT; i++) {
+	for (int i = 0; i < MAP_HEIGHT - 1; i++) {
 		this->mapGrid[i][0] = this->mapGrid[i][MAP_WIDTH - 1] = Object(wall);
 		for (int j = 1; j < MAP_WIDTH - 1; j++) {
 			this->mapGrid[i][j] = Object(air);
 		}
 	}
+	//Inizializza lo schermo della mappa
+	this->mapScreen = Screen(MAP_OFFSET_X, MAP_OFFSET_Y);
 }
 
 void Map::DrawLine(int y) {
-	Screen screen = Screen();
 	int realLineIndex = mod(this->StartLine + y, MAP_HEIGHT);
 	for (int i = 0; i < MAP_WIDTH; i++) {
-		screen.DrawObjectAt(this->mapGrid[realLineIndex][i], i, y);
+		Object objectToDraw = this->mapGrid[realLineIndex][i];
+		this->mapScreen.DrawObjectAt(objectToDraw, i, y);
 	}
 }
 

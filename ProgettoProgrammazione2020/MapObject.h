@@ -1,10 +1,11 @@
 #pragma once
-enum class ObjectType {
-	air = 0,
-	gas = 1,
-	obstacle = 2,
-	nails = 3,
-	pit = 4
+enum ObjectType {
+	air,
+	gas,
+	obstacle,
+	nails,
+	pit,
+	wall
 
 };
 
@@ -20,20 +21,23 @@ public:
 		this->type = type;
 		switch (type)
 		{
-		case nails = 3:
+		case nails:
 			this->appearence = ',';
 			break;
-		case obstacle = 2:
+		case obstacle:
 			this->appearence = 'X';
 			break;
-		case air = 0:
+		case air:
 			this->appearence = ' ';
 			break;
-		case gas = 1:
+		case gas:
 			this->appearence = 'G';
 			break;
-		case pit = 4:
-			this->appearence = 'U';
+		case pit:
+			this->appearence = 'F';
+			break;
+		case wall:
+			this->appearence = '|';
 			break;
 		default:
 			break;

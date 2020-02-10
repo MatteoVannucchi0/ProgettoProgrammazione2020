@@ -35,9 +35,21 @@ void Map::DrawMap() {
 	}
 }
 
+Object* Test_TranslateToBigObject(Object line[]) {
+	int sizeOfTile = 3;
+	Object newLine[MAP_WIDTH];
+	newLine[0] = newLine[MAP_WIDTH - 1] = Object(wall);
+	for (int i = 1; i < (MAP_WIDTH / 3) - 1; i++) {
+		int index = i * 3;
+		newLine[index] = newLine[index + 1] = newLine[index + 2] = line[i];
+	}
+	return newLine;
+}
+
 void Map::PushNewRow(Object line[]) {
+	Object* bigLine = Test_TranslateToBigObject(line);
 	for (int i = 0; i < MAP_WIDTH; i++) {
-		this->mapGrid[this->EndLine][i] = line[i];
+		this->mapGrid[this->EndLine][i] = bigLine[i];
 	}
 	this->StartLine = mod(this->StartLine - 1, MAP_HEIGHT);
 	this->EndLine = mod(this->EndLine - 1, MAP_HEIGHT);

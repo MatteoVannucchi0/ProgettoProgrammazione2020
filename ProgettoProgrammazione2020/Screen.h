@@ -30,4 +30,6 @@ public:
 	int GetCursorXPos();
 
 	int GetCursorYPos();
+
+	static void ScreenClear();
 };

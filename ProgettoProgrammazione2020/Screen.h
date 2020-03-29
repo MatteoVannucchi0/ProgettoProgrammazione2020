@@ -5,13 +5,13 @@
 #include "MapObject.h"
 using  namespace std;
 
-void InitScreen();
+void InitScreen();	//NOTA: Funzione che non dipende tanto dalla classe ma che va chiamata per inizializzare le funzioni dello schermo di PDCurses
 
 class Screen {
 protected:
-	int xOffset;
+	int xOffset;			//Mantiene l'offset della schermata rispetto all'asse x e quello sotto rispetto all'asse y
 	int yOffset;
-	int cursorXPos;
+	int cursorXPos;			//Cursore virtuale che serve in caso si vogliano fare cose particolari, è anche dove vengono stampati nel terminale i caratterri/oggetti.
 	int cursorYPos;
 
 public:

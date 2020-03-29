@@ -7,7 +7,7 @@ const int LEVEL_LENGHT = 500;
 const int MAIN_MENU_OFFSET_X = 25;
 const int MAIN_MENU_OFFSET_Y = 0;
 const int MAIN_MENU_DISTANCE_BETWEEN_OPTION = 4;
-// const string MAIN_MENU_OPTION[] = { "PLAY", "INSTRUCTION", "BEST SCORE", "EXIT" };
+const string MAIN_MENU_OPTION[] = { "PLAY", "INSTRUCTION", "BEST SCORE", "EXIT" };
 #define WallPair 1
 #define ObstaclePair 2
 #define AirPair 3

@@ -1,86 +1,49 @@
 #include "MapObject.h"
 
-enum ObjectType {
-	air,
-	gas,
-	obstacle,
-	nails,
-	pit
+Object::Object() {
 
-};
+}
 
-class Object {
-protected:
-	ObjectType type;
-	char appearance;
+Object::Object(ObjectType type) {
+	this->type = type;
+	this->ChangeAppearance(this->type);
+}
 
-	void ChangeAppearance() {
-		switch (type)
-		{
-		case nails:
-			this->appearance = '!';
-			break;
-		case obstacle:
-			this->appearance = 'X';
-			break;
-		case air:
-			this->appearance = ' ';
-			break;
-		case gas:
-			this->appearance = 'G';
-			break;
-		case pit:
-			this->appearance = 'U';
-			break;
-		default:
-			break;
-		}
+void Object::ChangeAppearance(){
+	switch (this->type)
+	{
+	case nails:
+		this->appearance = '!';
+		break;
+	case obstacle:
+		this->appearance = 'X';
+		break;
+	case air:
+		this->appearance = ' ';
+		break;
+	case gas:
+		this->appearance = 'G';
+		break;
+	case pit:
+		this->appearance = 'U';
+		break;
+	case wall:
+		this->appearance = '|';
+		break;
+	default:
+		break;
 	}
+}
 
+Object Object::GetType() {
+	return this->type;
+}
 
-public:
+void Object::ChangeType(Type newType) {
+	this->type = newType;
+	this->ChangeAppearance();
+}
 
-	Object() {
-
-		type = air;
-		appearance = ' ';
-	}
-
-	Object(ObjectType x) {
-		type = x;
-		switch (type)
-		{
-		case nails:
-			this->appearance = ',';
-			break;
-		case obstacle:
-			this->appearance = 'X';
-			break;
-		case air:
-			this->appearance = ' ';
-			break;
-		case gas:
-			this->appearance = 'G';
-			break;
-		case pit:
-			this->appearance = 'U';
-			break;
-		default:
-			break;
-		}
-	}
-
-	ObjectType GetType() {
-		return this->type;
-	}
-	
-	void PrintAppearance() {
-		cout << appearance;
-	}
-
-	void ChangeType(ObjectType new_ob) {
-		type = new_ob;
-		ChangeAppearance();
-	}
-	
-};
+void Object::PrintAppearance() {
+	cout << this->appearence;
+}

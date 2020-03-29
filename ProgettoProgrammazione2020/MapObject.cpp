@@ -39,7 +39,7 @@ Object Object::GetType() {
 	return this->type;
 }
 
-void Object::ChangeType(Type newType) {
+void Object::ChangeType(ObjectType newType) {
 	this->type = newType;
 	this->ChangeAppearance();
 }

@@ -8,10 +8,10 @@ using  namespace std;
 void InitScreen() {			// Funzione chiamata una singola volta all'inizio di tutto il programma che serve per inizilizzare vari valori e chiamare funzioni di inizializzazione relative alla libreria dello schermo
 	initscr();
 	cbreak();				// Non fa molta differenza fra nocbreak e cbreak, nella documentazione della libreria dicono che è utile averlo attivo quindi per sicurezza lo lascio.
-	noecho();				//per evitare che se si prema 'w' o altri tasti vengano mostrati a schermo
+	noecho();				//per evitare che se si premano dei tasti per muoversi/comandare qualcosa questi vengano mostrati a schermo
 	nodelay(stdscr, TRUE);	// se non ci fosse ad ogni gtech ci si bloccherebbe l'esecuzione
 	start_color();			//Per far in modo che si possano usare i colori
-	curs_set(0);			//Per evitare che il cursore venga mostrato (quello che lampeggia)
+	curs_set(0);			//Per evitare che il cursore venga mostrato (del terminale)
 	
 
 	init_pair(ObstaclePair, COLOR_RED, COLOR_BLACK);				// DEFINITI I COLORI DEGLI OGGETTI
@@ -47,10 +47,10 @@ void Screen::DrawObjectAt(Object obj, int x, int y) {				//Prende un oggetto di 
 	switch (obj.GetType())											//In base al tipo sceglie che caso fare, serve per la gestione dei colori 
 	{
 		case wall:
-			attron(COLOR_PAIR(WallPair));
-			printw("%c", obj.appearence);
-			attroff(COLOR_PAIR(WallPair));
-			break;
+			attron(COLOR_PAIR(WallPair));							//attron(COLOR_PAIR(WallPair)) serve per attivare la coppia di colori WallPair 
+			printw("%c", obj.appearence);		
+			attroff(COLOR_PAIR(WallPair));							//attroff(COLOR_PAIR(WallPair)) invece la disattiva
+			break;	
 		case obstacle:
 			attron(COLOR_PAIR(ObstaclePair));
 			printw("%c", obj.appearence);
@@ -66,17 +66,16 @@ void Screen::DrawObjectAt(Object obj, int x, int y) {				//Prende un oggetto di 
 			printw("%c", obj.appearence);
 			attroff(COLOR_PAIR(AirPair));
 			break;
-		default:
+		default:													//Magari può aver senso mettere un default? in teoria non ci dovrebbe mai andare, in caso genera un eccezione
 			break;
 	}
 }
 
 void Screen::DrawStringAt(string st, int x, int y, int colorPair) {		//data una stringa, due coordinate, e un intero che rappresenta un colorPair stampa la stringa con quel determinato colore
 	this->MoveCursor(x, y, false);
-	attron(COLOR_PAIR(colorPair));
+	attron(COLOR_PAIR(colorPair));										//Serve per attivare la coppia di colori
 	printw("%s", st.c_str());											//st.c_str() restituisce un puntatore all'array di char della stringa in modo da poterlo stampare
-	attroff(COLOR_PAIR(colorPair));
-	
+	attroff(COLOR_PAIR(colorPair));										//Disattiva la coppia di colori
 }
 
 void Screen::MoveCursor(int x, int y, bool relativeToCurrentPosition) {	//Funzione che muove il cursore virtuale e il "vero" cursore in un determinato punto
@@ -89,7 +88,7 @@ void Screen::MoveCursor(int x, int y, bool relativeToCurrentPosition) {	//Funzio
 		this->cursorXPos = x;
 		this->cursorYPos = y;
 	}
-		move(this->yOffset + this->cursorYPos, this->xOffset + this->cursorXPos);
+		move(this->yOffset + this->cursorYPos, this->xOffset + this->cursorXPos);		//Funzione della libreria di PDCurses, serve per far muovere il suo cursore virtuale nella posizione scelta
 }
 
 void Screen::ResetCursorPosition() {									//Il nome dice tutto
@@ -105,7 +104,7 @@ int Screen::GetCursorYPos() {
 }
 
 void Screen::ScreenClear() {
-	clear();
+	clear();						//NOTA: qua ho messo sia clear() (di PDCurses), sia system("cls") perchè sembra funzionare tutto meglio
 	system("cls");
-	curs_set(0);
+	curs_set(0);					//NOTA: in teoria questo non ci dovrebbe essere, ma sembra esserci un bug in PDCurses dove certe volte il cursore ricompare, quindi per sicurezzo lo risetto ogni volta
 }

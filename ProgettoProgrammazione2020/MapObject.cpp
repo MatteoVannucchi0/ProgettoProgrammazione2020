@@ -6,7 +6,7 @@ Object::Object() {
 
 Object::Object(ObjectType type) {
 	this->type = type;
-	this->ChangeAppearance(this->type);
+	this->ChangeAppearance();
 }
 
 void Object::ChangeAppearance(){
